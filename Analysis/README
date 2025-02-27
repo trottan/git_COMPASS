@@ -1,0 +1,5 @@
+SDME_rho_COMPASS.py is for extracing SDME using MLM
+
+analysis_CompareMC.py makes plots and compares the data to the monte carlo
+
+extractAngles.py calculates the distrubtion angles of Phi,phi and cos(Theta)
