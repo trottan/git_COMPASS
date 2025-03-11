@@ -132,6 +132,9 @@ bool beamFluxCheck(const PaEvent &e, const PaVertex &v, int vertexIndex, int Run
 	// Check that the beam crosses the full target length 
 	// PaAlgo::CrossCells(t_beam.vTPar(0),run, Rmax, Ymax, tgt_zmin, tgt_zmax, RmaxMC) 
 	Par_beam = beam.ParInVtx(vertexIndex); // beam parameters at the vertex
+	if(!(PaAlgo::InTarget(Par_beam,'O',Run, params.Rmax, params.Ymax, params.tgt_zmin, params.tgt_zmax, params.RmaxMC))) {
+		return false; 
+	}    
   	if (!(PaAlgo::CrossCells(beam_track.vTPar(0), Run, params.Rmax, params.Ymax, params.tgt_zmin, params.tgt_zmax, params.RmaxMC))) {
 		return false;
 	}
@@ -190,12 +193,9 @@ bool outMuCheck(const PaEvent &e, const PaVertex &v, int vertexIndex, int Run, c
 		return false; 
 	}
 
-	// Check that the vertex for the scattered muon is in the target 
 	const PaParticle & outMu_noHodo = e.vParticle(i_omu); 
 	const PaTPar& Par_outMu_noHodo = outMu_noHodo.ParInVtx(vertexIndex); // scattered muon parameters at the vertex 
-	if(!(PaAlgo::InTarget(Par_outMu_noHodo,'O',Run, params.Rmax, params.Ymax, params.tgt_zmin, params.tgt_zmax, params.RmaxMC))) {
-		return false; 
-	}    
+
 
 	// Check that there is a physics trigger for this event (MT, LT, OT or LAST)
 	if (trig_flag == 0) {
